@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:sob="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:background="#889fdf"
+    tools:context=".MainActivity">
+
+<!--    <com.wg.numberview.customview.numberinput.InputNumberView-->
+<!--         android:layout_width="wrap_content"-->
+<!--         android:layout_height="wrap_content"-->
+<!--         android:id="@+id/input_number_view"-->
+<!--         sob:max="30"-->
+<!--         sob:min="-30"-->
+<!--         sob:step="5"-->
+<!--        sob:defaultValue="2"-->
+<!--        sob:btnBackground="@drawable/select_num_btn_bg_right"/>-->
+
+    <com.wg.numberview.customview.loginpage.LoginKeyboard
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>

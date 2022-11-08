@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:background="@drawable/select_num_btn_bg_left"
+        android:layout_width="80dp"
+        android:id="@+id/minus_btn"
+        android:layout_height="match_parent"
+        android:text="-"
+        android:gravity="center"
+        android:textSize="30sp"/>
+
+    <EditText
+        android:id="@+id/value_edt"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:text="0"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:focusable="false"
+        android:background="@drawable/shap_num_inp_bg"/>
+
+    <TextView
+        android:id="@+id/plus_btn"
+        android:background="@drawable/select_num_btn_bg_right"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:text="+"
+        android:gravity="center"
+        android:textSize="16sp"/>
+
+</LinearLayout>
