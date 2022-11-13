@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import com.wg.numberview.R;
 
 public class LoginKeyboard extends LinearLayout implements View.OnClickListener {
+    private OnKeyPressListener mOnKeyPressListener;
+
     public LoginKeyboard(Context context) {
         this(context,null);
     }
@@ -61,32 +63,32 @@ public class LoginKeyboard extends LinearLayout implements View.OnClickListener 
     public void onClick(View view) {
         int viewID = view.getId();
         if (view instanceof TextView){
-           CharSequence text = ((TextView)view).getText();
-            Log.d(TAG, "click value is =>: "+text);
+
         }
-        switch (viewID){
-            case R.id.number_1:
-                break;
-            case R.id.number_2:
-                break;
-            case R.id.number_3:
-                break;
-            case R.id.number_4:
-                break;
-            case R.id.number_5:
-                break;
-            case R.id.number_6:
-                break;
-            case R.id.number_7:
-                break;
-            case R.id.number_8:
-                break;
-            case R.id.number_9:
-                break;
-            case R.id.number_0:
-                break;
-            case R.id.back:
-                break;
+        if (mOnKeyPressListener == null){
+            Log.d(TAG, "mOnKeyPressListener is null need not callback.. ");
+            return;
+        }
+
+        if (viewID == R.id.back){
+            //走back
+            mOnKeyPressListener.onBackPress();
+        }else {
+            //走数字结果通知
+            String text = ((TextView)view).getText().toString();
+            Log.d(TAG, "click value is =>: "+text);
+            mOnKeyPressListener.onNumberPress(Integer.parseInt(text));
         }
     }
+
+    public void setOnKeyPressListener(OnKeyPressListener listener){
+          this.mOnKeyPressListener = listener;
+    }
+
+    public interface OnKeyPressListener {
+        void onNumberPress(int number);
+
+        void onBackPress();
+    }
+
 }

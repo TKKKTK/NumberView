@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c0c0c0"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="阳光沙滩账号登录"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:drawableLeft="@mipmap/usercenter"
+        android:drawablePadding="20dp"
+        android:textColor="@color/white"
+        android:textSize="30sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:padding="20dp">
+            <EditText
+                android:focusable="false"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:drawablePadding="10dp"
+                android:background="@drawable/shape_edit_text_bg"
+                android:drawableLeft="@mipmap/phone"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:hint="请输入11位手机号码"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColorHint="#7e7e7e"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/verify_code_input_box"
+                    android:focusable="false"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/shape_edit_text_bg"
+                    android:drawableLeft="@mipmap/password"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:hint="请输入验证码"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColorHint="#7e7e7e"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"
+                    android:text="获取验证码"
+                    android:id="@+id/get_verify_code_btn"/>
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/get_verify_code_btn"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/shape_line_bg"/>
+            </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/report_check_box"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  同意《阳光沙滩用户使用协议》"
+                android:textColor="@color/mainColor"
+                android:textSize="20sp"
+                android:button="@drawable/selector_check_box"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:text="确定"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/selector_button_login_bg"
+                android:textSize="20sp"/>
+        </LinearLayout>
+        <com.wg.numberview.customview.loginpage.LoginKeyboard
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+</LinearLayout>

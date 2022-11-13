@@ -9,4 +9,9 @@
         <attr name="btnBackground" format="reference"/>
         <attr name="valueSize" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="LoginPageView">
+        <attr name="mainClolor" format="color"/>
+        <attr name="verifyCodeSize" format="integer"/>
+    </declare-styleable>
 </resources>
