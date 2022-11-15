@@ -29,7 +29,8 @@
             android:orientation="vertical"
             android:padding="20dp">
             <EditText
-                android:focusable="false"
+                android:id="@+id/phone_num_input_box"
+                android:maxLength="11"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
@@ -50,7 +51,6 @@
                 android:layout_marginTop="20dp">
                 <EditText
                     android:id="@+id/verify_code_input_box"
-                    android:focusable="false"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:paddingTop="10dp"
@@ -91,10 +91,12 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  同意《阳光沙滩用户使用协议》"
+                android:text="同意《阳光沙滩用户使用协议》"
                 android:textColor="@color/mainColor"
                 android:textSize="20sp"
-                android:button="@drawable/selector_check_box"/>
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_check_box"
+                android:drawablePadding="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,7 +112,8 @@
         <com.wg.numberview.customview.loginpage.LoginKeyboard
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:id="@+id/number_key_pad"/>
 
     </LinearLayout>
 
