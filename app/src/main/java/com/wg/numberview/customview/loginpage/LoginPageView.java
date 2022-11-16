@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 import com.wg.numberview.R;
 import com.wg.numberview.customview.numberinput.InputNumberView;
 
+/**
+ * 点击获取手机号码--》条件手机号码是否正确
+ */
 public class LoginPageView extends FrameLayout {
 
     public static final int SIZE_VERIFY_CODE_DEFAULT = 4;
@@ -27,6 +30,7 @@ public class LoginPageView extends FrameLayout {
     private LoginKeyboard mLoginKeyboard;
     private EditText mPhoneNumInput;
     private EditText mVerifyCodeInput;
+    private View mGetVerifyCodeBtn;
 
     public LoginPageView(@NonNull Context context) {
         this(context,null);
@@ -48,7 +52,7 @@ public class LoginPageView extends FrameLayout {
     }
 
     private void disableEdtFocus2Keypad() {
-        mPhoneNumInput.setShowSoftInputOnFocus(false);
+        mPhoneNumInput.setShowSoftInputOnFocus(false); //禁止系统自带的键盘显示
         mVerifyCodeInput.setShowSoftInputOnFocus(false);
     }
 
@@ -82,19 +86,28 @@ public class LoginPageView extends FrameLayout {
                 }
             }
         });
+
+        mGetVerifyCodeBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo:获取验证码
+            }
+        });
+
     }
 
     private void initView() {
         LayoutInflater.from(getContext()).inflate(R.layout.login_page_view,this);
         mIsConfirm = this.findViewById(R.id.report_check_box);
-        EditText verifyCodeInput = this.findViewById(R.id.verify_code_input_box);
+        mVerifyCodeInput = this.findViewById(R.id.verify_code_input_box);
         if (mColor != -1){
             mIsConfirm.setTextColor(mColor);
         }
-            verifyCodeInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mVerifyCodeSize)});
+        mVerifyCodeInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mVerifyCodeSize)});
          mLoginKeyboard = this.findViewById(R.id.number_key_pad);
          mPhoneNumInput = this.findViewById(R.id.phone_num_input_box);
-         mVerifyCodeInput = this.findViewById(R.id.verify_code_input_box);
+         mGetVerifyCodeBtn = this.findViewById(R.id.get_verify_code_btn);
+
     }
 
     private void initAttrs(@NonNull Context context, @Nullable AttributeSet attrs) {
