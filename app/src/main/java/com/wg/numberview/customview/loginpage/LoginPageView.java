@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,9 +63,11 @@ public class LoginPageView extends FrameLayout {
      * 通知UI更新
      * @param context
      */
-    private int totalDuration = 60 * 1000;
+    public static final int DURATION_DEFAULT = 60 * 1000;
+    private int mCountDuration = DURATION_DEFAULT;
     private int dTime = 1000;
-    private int restTime = totalDuration;
+    private int restTime = mCountDuration;
+    private boolean isCountDowning = false;
      public void startCountDown(){
          mHandler = App.getHandler();
          mHandler.post(new Runnable() {
@@ -75,9 +79,13 @@ public class LoginPageView extends FrameLayout {
                    //直接更新UI
                    mGetVerifyCodeBtn.setText("("+restTime/1000 +")秒");
                    mGetVerifyCodeBtn.setEnabled(false);
+                   isCountDowning = true;
                }else {
+                   restTime = mCountDuration;
                    mGetVerifyCodeBtn.setText("获取验证码");
+                   isCountDowning = false;
                    mGetVerifyCodeBtn.setEnabled(true);
+                   updateAllBtnState();
                }
 
 
@@ -85,6 +93,45 @@ public class LoginPageView extends FrameLayout {
         });
      }
 
+     private void beginCountDown(){
+         mGetVerifyCodeBtn.setEnabled(false);
+         isCountDowning = true;
+         new CountDownTimer(mCountDuration,1000){
+             @Override
+             public void onTick(long l) {
+                 //通知UI更新
+                int res = (int) (l / 1000);
+                 mGetVerifyCodeBtn.setText("("+res +")秒");
+             }
+
+             @Override
+             public void onFinish() {
+                 //倒计时结束
+                 restTime = mCountDuration;
+                 mGetVerifyCodeBtn.setText("获取验证码");
+                 isCountDowning = false;
+                 mGetVerifyCodeBtn.setEnabled(true);
+                 updateAllBtnState();
+             }
+         }.start();
+     }
+
+    /**
+     * 验证码错误
+     */
+    public void onVerifyCodeError(){
+         //第一步：给个toast提示
+        Toast.makeText(getContext(),"验证码错误",Toast.LENGTH_SHORT);
+         //第二步：清空内容
+         //第三步：停止倒计时
+     }
+
+    /**
+     * 登录成功
+     */
+    public void onSuccess(){
+
+     }
 
     public LoginPageView(@NonNull Context context) {
         this(context,null);
@@ -155,11 +202,9 @@ public class LoginPageView extends FrameLayout {
                 //获取验证码
                 if (mActionListenner != null){
                     //拿到手机号
-                    String phoneNum = mPhoneNumInput.getText().toString().trim();
-                    Log.d(TAG, " phoneNum ==>"+phoneNum);
-                    mActionListenner.onGetVerifyCodeClick(phoneNum);
+                    mActionListenner.onGetVerifyCodeClick(getPhoneNumber());
                     //开始倒计时
-                    startCountDown();
+                    beginCountDown();
                 } else {
                     throw new IllegalArgumentException("no action to get verify ");
                 }
@@ -176,6 +221,7 @@ public class LoginPageView extends FrameLayout {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 isVerifyCodeOk = charSequence.length() == 4;
                 updateAllBtnState();
+
             }
 
             @Override
@@ -210,9 +256,24 @@ public class LoginPageView extends FrameLayout {
             @Override
             public void onClick(View view) {
 
+                //登录
+                if (mActionListenner != null){
+                    //拿到手机号码和验证码
+                    mActionListenner.onConfirmClick(getVerifyCode(),getPhoneNumber());
+                }
             }
         });
 
+    }
+
+    private String getPhoneNumber(){
+        String phoneNum = mPhoneNumInput.getText().toString().trim();
+        return phoneNum;
+    }
+
+    private String getVerifyCode(){
+         String verifyCode = mVerifyCodeInput.getText().toString().trim();
+         return verifyCode;
     }
 
     private void initView() {
@@ -226,6 +287,7 @@ public class LoginPageView extends FrameLayout {
          mLoginKeyboard = this.findViewById(R.id.number_key_pad);
          mPhoneNumInput = this.findViewById(R.id.phone_num_input_box);
          mPhoneNumInput.requestFocus();
+        disableEdtFocus2Keypad();
          mGetVerifyCodeBtn = this.findViewById(R.id.get_verify_code_btn);
          disableCopyAndPaste(mPhoneNumInput);
          disableCopyAndPaste(mVerifyCodeInput);
@@ -238,6 +300,7 @@ public class LoginPageView extends FrameLayout {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoginPageView);
         mColor =  a.getColor(R.styleable.LoginPageView_mainClolor,-1);
         mVerifyCodeSize = a.getInt(R.styleable.LoginPageView_verifyCodeSize,SIZE_VERIFY_CODE_DEFAULT);
+        mCountDuration = a.getInt(R.styleable.LoginPageView_countDownDuration,DURATION_DEFAULT);
         a.recycle();
     }
 
@@ -250,7 +313,9 @@ public class LoginPageView extends FrameLayout {
     }
 
     private void updateAllBtnState(){
-        mGetVerifyCodeBtn.setEnabled(isPhoneNumOk);
+         if (!isCountDowning){
+             mGetVerifyCodeBtn.setEnabled(isPhoneNumOk);
+         }
         mLoginBtn.setEnabled(isPhoneNumOk && isAgreementOk && isVerifyCodeOk);
     }
 
@@ -355,5 +420,13 @@ public class LoginPageView extends FrameLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getmCountDuration() {
+        return mCountDuration;
+    }
+
+    public void setmCountDuration(int mCountDuration) {
+        this.mCountDuration = mCountDuration;
     }
 }
